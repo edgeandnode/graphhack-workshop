@@ -6,8 +6,11 @@
   "private": true,
   "scripts": {
     "build": "pnpm build --parallel --reporter append-only --aggregate-output",
-    "build:ui": "pnpm build --filter ./ui"
+    "build:ui": "pnpm build --filter ./ui",
+    "format:check": "prettier --check \"./**/*.ts\" README.md",
+    "format": "prettier --write \"./**/*.ts\" README.md"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  }
 }
