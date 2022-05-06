@@ -1,0 +1,13 @@
+{
+  "name": "graphhack-workshop",
+  "description": "",
+  "version": "1.0.0",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "build": "pnpm build --parallel --reporter append-only --aggregate-output",
+    "build:ui": "pnpm build --filter ./ui"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

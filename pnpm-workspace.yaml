@@ -1,0 +1,4 @@
+packages:
+  - contract
+  - subgraph
+  - ui

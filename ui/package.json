@@ -1,0 +1,7 @@
+{
+  "name": "@graphhack-workshop/ui",
+  "private": true,
+  "scripts": {
+    "build": "echo build ui"
+  }
+}
