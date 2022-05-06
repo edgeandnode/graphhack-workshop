@@ -1,6 +1,7 @@
 {
   "name": "@graphhack-workshop/subgraph",
   "private": true,
+  "version": "0.1.0",
   "scripts": {
     "build": "echo build subgraph"
   }

@@ -1,6 +1,7 @@
 {
   "name": "@graphhack-workshop/contract",
   "private": true,
+  "version": "0.1.0",
   "scripts": {
     "build": "echo build contract"
   }
