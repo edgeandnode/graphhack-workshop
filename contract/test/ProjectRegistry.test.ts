@@ -4,13 +4,13 @@ import { ethers } from 'hardhat'
 
 import { ProjectRegistry } from '../build/types'
 
-describe('ProjectRegistry', () => {
-  const VoteChoice = Object.freeze({
-    Null: constants.Zero,
-    Up: BigNumber.from(1),
-    Down: BigNumber.from(2),
-  })
+enum VoteChoice {
+  NULL = 0,
+  UP = 1,
+  DOWN = 2,
+}
 
+describe('ProjectRegistry', () => {
   async function buildContract(): Promise<ProjectRegistry> {
     const ProjectRegistry = await ethers.getContractFactory('ProjectRegistry')
     const projectRegistry = await ProjectRegistry.deploy()
@@ -232,7 +232,7 @@ describe('ProjectRegistry', () => {
       const projectSeqId = await registry.projectOwnerSeqIds(_owner)
       const projectId = BigNumber.from(utils.solidityKeccak256(['address', 'uint256'], [_owner, projectSeqId]))
 
-      await expect(registry.vote(projectId, VoteChoice.Up)).to.be.revertedWith(
+      await expect(registry.vote(projectId, VoteChoice.NULL)).to.be.revertedWith(
         'Cannot vote on Project that does not exist',
       )
     })
@@ -254,7 +254,7 @@ describe('ProjectRegistry', () => {
       const submitProjectTx = await registry.submitProject(metadata)
       await submitProjectTx.wait()
 
-      await expect(registry.vote(projectId, VoteChoice.Null)).to.be.revertedWith('Vote must be either Up or Down')
+      await expect(registry.vote(projectId, VoteChoice.NULL)).to.be.revertedWith('Vote must be either Up or Down')
     })
     it('should allow the user to Vote on the Project', async () => {
       const [owner] = await ethers.getSigners()
@@ -274,7 +274,7 @@ describe('ProjectRegistry', () => {
       const submitProjectTx = await registry.submitProject(metadata)
       await submitProjectTx.wait()
 
-      const voteTx = await registry.vote(projectId, VoteChoice.Up)
+      const voteTx = await registry.vote(projectId, VoteChoice.UP)
       expect(voteTx)
         .emit(registry, 'ProjectUpdated')
         .withArgs(
@@ -288,11 +288,11 @@ describe('ProjectRegistry', () => {
           constants.Zero,
           BigNumber.from(1),
         )
-      expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, _owner, VoteChoice.Up)
+      expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, _owner, VoteChoice.UP)
 
       // get the vote
       const vote = await registry.getProjectVote(projectId, _owner)
-      expect(vote).equal(VoteChoice.Up)
+      expect(vote).equal(VoteChoice.UP)
       // make sure the Project has the vote count
       const proposal = await registry.getProject(projectId)
       expect(proposal.upvotes).equal(BigNumber.from(1))
@@ -317,7 +317,7 @@ describe('ProjectRegistry', () => {
       await submitProjectTx.wait()
 
       // vote initially as addr1
-      const voteTx = await registry.connect(addr1).vote(projectId, VoteChoice.Up)
+      const voteTx = await registry.connect(addr1).vote(projectId, VoteChoice.UP)
       expect(voteTx)
         .emit(registry, 'ProjectUpdated')
         .withArgs(
@@ -331,9 +331,9 @@ describe('ProjectRegistry', () => {
           constants.Zero,
           BigNumber.from(1),
         )
-      expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, addr1.address, VoteChoice.Up)
+      expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, addr1.address, VoteChoice.UP)
       // attempt to vote again, should fail
-      await expect(registry.connect(addr1).vote(projectId, VoteChoice.Up)).to.be.revertedWith(
+      await expect(registry.connect(addr1).vote(projectId, VoteChoice.UP)).to.be.revertedWith(
         'Can only vote once on a Project',
       )
     })
@@ -355,11 +355,11 @@ describe('ProjectRegistry', () => {
       const submitProjectTx = await registry.submitProject(metadata)
       await submitProjectTx.wait()
 
-      const voteTx = await registry.vote(projectId, VoteChoice.Up)
+      const voteTx = await registry.vote(projectId, VoteChoice.UP)
       await voteTx.wait()
-      const downVote1Tx = await registry.connect(addr1).vote(projectId, VoteChoice.Down)
+      const downVote1Tx = await registry.connect(addr1).vote(projectId, VoteChoice.DOWN)
       await downVote1Tx.wait()
-      const downVote2Tx = await registry.connect(addr2).vote(projectId, VoteChoice.Down)
+      const downVote2Tx = await registry.connect(addr2).vote(projectId, VoteChoice.DOWN)
       await downVote2Tx.wait()
 
       // make sure the Project has the vote count

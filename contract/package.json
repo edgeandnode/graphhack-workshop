@@ -2,13 +2,24 @@
   "name": "@graphhack-workshop/contract",
   "private": true,
   "version": "0.1.0",
+  "files": [
+    "dist/**/*",
+    "addresses.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "clean": "npx hardhat clean",
-    "precompile": "yarn clean",
+    "precompile": "pnpm clean",
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",
     "test:report-gas": "REPORT_GAS=true npx hardhat test",
-    "test:coverage": "npx hardhat coverage"
+    "test:coverage": "npx hardhat coverage",
+    "deploy": "hardhat migrate",
+    "deploy:local": "npx hardhat run --network localhost scripts/deploy.ts",
+    "pre-push": "pnpm compile && pnpm test",
+    "prepublishOnly": "./scripts/prepublish.sh",
+    "ganache": "ganache"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
@@ -43,5 +54,8 @@
     "ts-node": "^10.7.0",
     "typechain": "^8.0.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "ganache": "^7.1.0"
   }
 }
