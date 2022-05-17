@@ -203,7 +203,7 @@ contract ProjectRegistry {
     Project memory project = getProject(_projectId);
     if (_vote == VoteChoice.Up) {
       project.upvotes = project.upvotes + 1;
-    } else if (_vote == VoteChoice.Down) {
+    } else {
       project.downvotes = project.downvotes + 1;
     }
 
