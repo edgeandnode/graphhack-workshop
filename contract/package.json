@@ -17,8 +17,9 @@
     "test:coverage": "npx hardhat coverage",
     "deploy": "hardhat migrate",
     "deploy:local": "npx hardhat run --network localhost scripts/deploy.ts",
+    "deploy:rinkeby": "npx hardhat run --network rinkeby scripts/deploy.ts",
     "pre-push": "pnpm compile && pnpm test",
-    "prepublishOnly": "./scripts/prepublish.sh",
+    "prepublishOnly": "./scripts/pre-publish.sh",
     "ganache": "ganache"
   },
   "devDependencies": {
