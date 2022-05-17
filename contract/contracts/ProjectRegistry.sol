@@ -19,7 +19,8 @@ contract ProjectRegistry {
     string subtitle;
     string imageUrl;
     string description;
-    int256 votes;
+    uint256 upvotes;
+    uint256 downvotes;
   }
 
   struct ProjectMetadata {
@@ -55,7 +56,9 @@ contract ProjectRegistry {
    * @param subtitle Subtitle of the Project.
    * @param description Description of the Project.
    * @param imageUrl URL of the Project image.
-   * @param votes The cumulative upvotes and downvotes for the Project. can be negative.
+   * @param upvotes The total Up votes on the Project.
+   * @param downvotes The total Down votes on the Project.
+   * @param voteCount The total Up and Down vote count.
    */
   event ProjectUpdated(
     uint256 indexed projectId,
@@ -64,7 +67,9 @@ contract ProjectRegistry {
     string subtitle,
     string description,
     string imageUrl,
-    int256 votes
+    uint256 upvotes,
+    uint256 downvotes,
+    uint256 voteCount
   );
 
   /**
@@ -147,7 +152,8 @@ contract ProjectRegistry {
     project.subtitle = _metadata.subtitle;
     project.description = _metadata.description;
     project.imageUrl = _metadata.imageUrl;
-    project.votes = 0;
+    project.upvotes = 0;
+    project.downvotes = 0;
 
     _setProject(projectId, project);
     _setProjectOwner(projectId, owner);
@@ -196,9 +202,9 @@ contract ProjectRegistry {
   function vote(uint256 _projectId, VoteChoice _vote) public canVote(_projectId, _vote) {
     Project memory project = getProject(_projectId);
     if (_vote == VoteChoice.Up) {
-      project.votes = project.votes + 1;
+      project.upvotes = project.upvotes + 1;
     } else if (_vote == VoteChoice.Down) {
-      project.votes = project.votes - 1;
+      project.downvotes = project.downvotes + 1;
     }
 
     _setProject(_projectId, project);
@@ -312,7 +318,17 @@ contract ProjectRegistry {
   function _setProject(uint256 _projectId, Project memory _data) internal {
     projects[_projectId] = _data;
 
-    emit ProjectUpdated(_projectId, _data.owner, _data.name, _data.subtitle, _data.description, _data.imageUrl, _data.votes);
+    emit ProjectUpdated(
+      _projectId,
+      _data.owner,
+      _data.name,
+      _data.subtitle,
+      _data.description,
+      _data.imageUrl,
+      _data.upvotes,
+      _data.downvotes,
+      _data.upvotes + _data.downvotes
+    );
   }
 
   /**

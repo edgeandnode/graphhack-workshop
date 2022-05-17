@@ -76,7 +76,8 @@ describe('ProjectRegistry', () => {
       expect(project.subtitle).equal(metadata.subtitle)
       expect(project.description).equal(metadata.description)
       expect(project.imageUrl).equal(metadata.imageUrl)
-      expect(project.votes).equal(constants.Zero)
+      expect(project.upvotes).equal(constants.Zero)
+      expect(project.downvotes).equal(constants.Zero)
 
       const projectOwner = await registry.getProjectOwner(projectId)
       expect(projectOwner).equal(_owner)
@@ -217,7 +218,8 @@ describe('ProjectRegistry', () => {
       expect(project.subtitle).equal(updatedMetadata.subtitle)
       expect(project.description).equal(updatedMetadata.description)
       expect(project.imageUrl).equal(updatedMetadata.imageUrl)
-      expect(project.votes).equal(constants.Zero)
+      expect(project.upvotes).equal(constants.Zero)
+      expect(project.downvotes).equal(constants.Zero)
     })
   })
 
@@ -283,6 +285,8 @@ describe('ProjectRegistry', () => {
           metadata.description,
           metadata.imageUrl,
           BigNumber.from(1),
+          constants.Zero,
+          BigNumber.from(1),
         )
       expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, _owner, VoteChoice.Up)
 
@@ -291,7 +295,8 @@ describe('ProjectRegistry', () => {
       expect(vote).equal(VoteChoice.Up)
       // make sure the Project has the vote count
       const proposal = await registry.getProject(projectId)
-      expect(proposal.votes).equal(BigNumber.from(1))
+      expect(proposal.upvotes).equal(BigNumber.from(1))
+      expect(proposal.downvotes).equal(constants.Zero)
     })
     it('should be rejected if the user already voted on the Project', async () => {
       const [owner, addr1] = await ethers.getSigners()
@@ -323,6 +328,8 @@ describe('ProjectRegistry', () => {
           metadata.description,
           metadata.imageUrl,
           BigNumber.from(1),
+          constants.Zero,
+          BigNumber.from(1),
         )
       expect(voteTx).emit(registry, 'VoteSubmitted').withArgs(projectId, addr1.address, VoteChoice.Up)
       // attempt to vote again, should fail
@@ -330,7 +337,7 @@ describe('ProjectRegistry', () => {
         'Can only vote once on a Project',
       )
     })
-    it('should allow the Project.votes to be negative', async () => {
+    it('should allow users to Upvote and Downvote', async () => {
       const [owner, addr1, addr2] = await ethers.getSigners()
       const _owner = owner.address
       const registry = await buildContract()
@@ -357,7 +364,8 @@ describe('ProjectRegistry', () => {
 
       // make sure the Project has the vote count
       const proposal = await registry.getProject(projectId)
-      expect(proposal.votes).equal(BigNumber.from('-1'))
+      expect(proposal.upvotes).equal(BigNumber.from(1))
+      expect(proposal.downvotes).equal(BigNumber.from(2))
     })
   })
 })
