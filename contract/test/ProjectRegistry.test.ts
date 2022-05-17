@@ -10,4 +10,17 @@ describe('ProjectRegistry', () => {
     Up: BigNumber.from(1),
     Down: BigNumber.from(2),
   })
+
+  async function buildContract(): Promise<ProjectRegistry> {
+    const ProjectRegistry = await ethers.getContractFactory('ProjectRegistry')
+    const projectRegistry = await ProjectRegistry.deploy()
+
+    return await projectRegistry.deployed()
+  }
+
+  describe('submitProject()', () => {
+    it('should be rejected if the submitted name is an empty string', async () => {
+      const registry = await buildContract()
+    })
+  })
 })

@@ -22,6 +22,13 @@ contract ProjectRegistry {
     int256 votes;
   }
 
+  struct ProjectMetadata {
+    string name;
+    string subtitle;
+    string imageUrl;
+    string description;
+  }
+
   // -- State --
   
   /// @notice mapping of Project id's to the stored Project instance
@@ -128,26 +135,18 @@ contract ProjectRegistry {
    * Stores the Project data on chain.
    *
    * @custom:emits ProjectUpdated
-   * @param _name Name of the Project.
-   * @param _subtitle Subtitle of the Project.
-   * @param _description Description of the Project.
-   * @param _imageUrl URL of the image for the Project.
+   * @param _metadata The Project metadata, containing the Project info
    */
-  function submitProject(
-    string calldata _name,
-    string calldata _subtitle,
-    string calldata _description,
-    string calldata _imageUrl
-  ) public canSubmitProject(_name, _imageUrl) {
+  function submitProject(ProjectMetadata calldata _metadata) public canSubmitProject(_metadata.name, _metadata.imageUrl) {
     address owner = msg.sender;
     uint256 projectId = _nextProjectId(owner);
 
     Project memory project = getProject(projectId);
     project.owner = owner;
-    project.name = _name;
-    project.subtitle = _subtitle;
-    project.description = _description;
-    project.imageUrl = _imageUrl;
+    project.name = _metadata.name;
+    project.subtitle = _metadata.subtitle;
+    project.description = _metadata.description;
+    project.imageUrl = _metadata.imageUrl;
     project.votes = 0;
 
     _setProject(projectId, project);
@@ -165,23 +164,17 @@ contract ProjectRegistry {
    *
    * @custom:emits ProjectUpdated
    * @param _projectId ID of the Project whose metadata is being updated
-   * @param _name Potentially updated name of the Project.
-   * @param _subtitle Potentially updated subtitle of the Project.
-   * @param _description Potentially updated description of the Project.
-   * @param _imageUrl Potentially updated URL of the image for the Project.
+   * @param _metadata The Project metadata, containing the Project info
    */
   function updateProjectMetadata(
     uint256 _projectId,
-    string calldata _name,
-    string calldata _subtitle,
-    string calldata _description,
-    string calldata _imageUrl
-  ) public canUpdateProject(_projectId, _name, _imageUrl) {
+    ProjectMetadata calldata _metadata
+  ) public canUpdateProject(_projectId, _metadata.name, _metadata.imageUrl) {
     Project memory project = getProject(_projectId);
-    project.name = _name;
-    project.subtitle = _subtitle;
-    project.description = _description;
-    project.imageUrl = _imageUrl;
+    project.name = _metadata.name;
+    project.subtitle = _metadata.subtitle;
+    project.description = _metadata.description;
+    project.imageUrl = _metadata.imageUrl;
 
     _setProject(_projectId, project);
   }
