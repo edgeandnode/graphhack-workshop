@@ -1,3 +1,4 @@
+/** @type {import("eslint").Linter.Config} */
 module.exports = {
   env: {
     browser: false,
@@ -5,7 +6,7 @@ module.exports = {
     mocha: true,
     node: true,
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   extends: [
     'standard',
     'plugin:prettier/recommended',
@@ -20,8 +21,27 @@ module.exports = {
   rules: {
     'n/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'], version: '>=14.0.0' }],
     'n/no-missing-import': 'off', // false positives, TS checks this
+    'n/no-unpublished-import': 'off',
+
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+
+    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/exports': 'warn',
   },
+  overrides: [
+    {
+      files: ['ui/**/*.tsx'],
+      extends: ['next/core-web-vitals'],
+      parserOptions: {
+        project: require.resolve('./ui/tsconfig.json'),
+      },
+      rules: {
+        '@typescript-eslint/no-floating-promises': 'warn',
+      },
+    },
+  ],
 }
