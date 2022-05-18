@@ -1,12 +1,11 @@
-import type { AppProps } from "next/app";
-import { createClient, Provider } from "wagmi";
-import { ThemeProvider } from "theme-ui";
+import type { AppProps } from 'next/app'
+import { createClient, Provider } from 'wagmi'
+import { ThemeProvider } from 'theme-ui'
+import { theme } from '../src/theme'
 
-import { theme } from "../src/theme";
+import '../styles/globals.css'
 
-import "../styles/globals.css";
-
-const client = createClient();
+const client = createClient()
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,5 +14,5 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Provider>
     </ThemeProvider>
-  );
+  )
 }
