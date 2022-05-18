@@ -6,7 +6,7 @@ module.exports = {
     mocha: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'simple-import-sort'],
+  plugins: ['@typescript-eslint', 'simple-import-sort', '@next/next'],
   extends: [
     'standard',
     'plugin:prettier/recommended',
@@ -31,6 +31,8 @@ module.exports = {
 
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+
+    'prettier/prettier': 'off', // run Prettier on its own
   },
   overrides: [
     {

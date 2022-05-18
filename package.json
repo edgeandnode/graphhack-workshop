@@ -9,7 +9,8 @@
     "build:ui": "pnpm build --filter ./ui",
     "format:check": "prettier --check \"./**/*.ts\" README.md",
     "format": "prettier --write \"./**/*.ts\" README.md",
-    "lint": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx}"
+    "lint": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx}",
+    "lint:fix": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx} --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.24.0",

@@ -1,9 +1,8 @@
 import '@rainbow-me/rainbowkit/styles.css'
 
 import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
-
-import { chain, createClient, WagmiProvider } from 'wagmi'
 import { ReactNode } from 'react'
+import { chain, createClient, WagmiProvider } from 'wagmi'
 
 const { chains, provider } = configureChains(
   [chain.rinkeby],

@@ -1,4 +1,4 @@
-import { crypto, ByteArray, Address, BigInt } from '@graphprotocol/graph-ts'
+import { Address, BigInt, ByteArray, crypto } from '@graphprotocol/graph-ts'
 
 /**
  * Create a keccak256 hash of the given value.
