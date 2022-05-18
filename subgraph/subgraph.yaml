@@ -6,7 +6,8 @@ dataSources:
     name: ProjectRegistry
     network: rinkeby
     source:
-      address: "0x65D1214F0b620dBf18F504D76Bed7beADe6BD907"
+      address: '0x65D1214F0b620dBf18F504D76Bed7beADe6BD907'
+      startBlock: 10694145
       abi: ProjectRegistry
     mapping:
       kind: ethereum/events

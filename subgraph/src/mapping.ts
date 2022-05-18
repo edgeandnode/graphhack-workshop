@@ -21,7 +21,9 @@ function findOrCreateUser(address: Address, timestamp: BigInt): User {
 
   const createUser = new User(id)
   createUser.projects = []
+  createUser.projectCount = 0
   createUser.votes = []
+  createUser.voteCount = 0
   createUser.createdAt = timestamp
   createUser.updatedAt = timestamp
   createUser.save()
@@ -54,11 +56,6 @@ export function handleProjectUpdated(event: ProjectUpdated): void {
 
   log.debug(`mapping.handleProjectUpdated() - processing the upsert of Project [${projectId.toString()}]`, [])
 
-  if (name.byteLength === 0 || imageUrl == null || owner.byteLength === 0) {
-    log.warning(`mapping.handleProjectUpdated() - event invalid. skipping...`, [])
-    return
-  }
-
   // find or create the owner on the Project
   const _owner = findOrCreateUser(owner, timestamp)
 
@@ -81,11 +78,7 @@ export function handleProjectUpdated(event: ProjectUpdated): void {
   project.save()
 
   // add the Project to the list of user Projects
-  if (_owner.projects == null) {
-    _owner.projects = [project.id]
-  } else {
-    _owner.projects!.push(project.id)
-  }
+  _owner.projectCount = _owner.projectCount + 1
   _owner.save()
 }
 
@@ -129,18 +122,7 @@ export function handleVoteSubmitted(event: VoteSubmitted): void {
   createdVote.timestamp = timestamp
   createdVote.save()
 
-  // add the vote to the User.votes and Project.votes
-  if (user.votes == null) {
-    user.votes = [createdVote.id]
-  } else {
-    user.votes!.push(createdVote.id)
-  }
+  // add the vote to the User.voteCount
+  user.voteCount = user.voteCount + 1
   user.save()
-
-  if (project.votes == null) {
-    project.votes = [createdVote.id]
-  } else {
-    project.votes!.push(createdVote.id)
-  }
-  project.save()
 }

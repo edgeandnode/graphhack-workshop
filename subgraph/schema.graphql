@@ -3,9 +3,13 @@ type User @entity {
   "The user eth address."
   id: ID!
   "A list os Projects the User owns."
-  projects: [Project!]
+  projects: [Project!] @derivedFrom(field: "owner")
+  "Count of all of the Projects the User owns."
+  projectCount: Int!
   "All of the votes the User has submitted for Projects."
-  votes: [Vote!]
+  votes: [Vote!] @derivedFrom(field: "user")
+  "Count of all of the Votes the User has submited on Projects."
+  voteCount: Int!
   "Block tiemstamp of when the User record was created."
   createdAt: BigInt!
   "Block timestamp of when the User was last updated."
@@ -59,5 +63,5 @@ type Project @entity {
   "Block timestamp of when the Project was last updated."
   updatedAt: BigInt!
   "A list of the Votes submitted for the Project."
-  votes: [Vote!]
+  votes: [Vote!] @derivedFrom(field: "project")
 }
