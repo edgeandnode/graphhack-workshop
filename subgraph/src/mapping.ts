@@ -1,8 +1,8 @@
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
 
 import { ProjectUpdated, VoteSubmitted } from '../generated/ProjectRegistry/ProjectRegistry'
-import { User, Vote, Project } from '../generated/schema'
-import { buildVoteId, buildVoteChoice } from './utils'
+import { Project, User, Vote } from '../generated/schema'
+import { buildVoteChoice, buildVoteId } from './utils'
 
 /**
  * Attempt to find a user by their eth address, which is their stored id.
