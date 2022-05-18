@@ -7,8 +7,11 @@ import { readFileSync, writeFileSync } from 'fs'
 import { config, ethers } from 'hardhat'
 
 async function main() {
-  const addresses = JSON.parse(readFileSync('addresses.json').toString())
-  const network = config.networks![process.env.HARDHAT_NETWORK!]!
+  const addresses = JSON.parse(readFileSync('addresses.json').toString()) as Record<
+    string,
+    { ProjectRegistry: { address: string } }
+  >
+  const network = config.networks[process.env.HARDHAT_NETWORK!]!
   const chainId = network.chainId!.toString()
 
   const ProjectRegistry = await ethers.getContractFactory('ProjectRegistry')

@@ -1,18 +1,17 @@
-import type { AppProps } from 'next/app'
-import { createClient, Provider } from 'wagmi'
-import { ThemeProvider } from 'theme-ui'
-import { theme } from '../src/theme'
-
 import '../styles/globals.css'
 
-const client = createClient()
+import type { AppProps } from 'next/app'
+import { ThemeProvider } from 'theme-ui'
+
+import { theme } from '../src/theme'
+import { WalletProvider } from '../src/wallet'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
-      <Provider client={client}>
+      <WalletProvider>
         <Component {...pageProps} />
-      </Provider>
+      </WalletProvider>
     </ThemeProvider>
   )
 }

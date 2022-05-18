@@ -1,6 +1,3 @@
-import * as dotenv from 'dotenv'
-
-import { HardhatUserConfig, task } from 'hardhat/config'
 import '@nomiclabs/hardhat-etherscan'
 import '@nomiclabs/hardhat-waffle'
 import '@typechain/hardhat'
@@ -8,7 +5,15 @@ import 'hardhat-gas-reporter'
 import 'hardhat-abi-exporter'
 import 'solidity-coverage'
 
+import * as dotenv from 'dotenv'
+import { HardhatUserConfig, task } from 'hardhat/config'
+
 dotenv.config()
+
+const { INFURA_KEY } = process.env
+if (!INFURA_KEY) {
+  throw new Error('process.env.INFURA_KEY is missing')
+}
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -28,7 +33,7 @@ const config: HardhatUserConfig = {
   networks: {
     rinkeby: {
       chainId: 4,
-      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`,
+      url: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
       gasPrice: 'auto',
       gas: 'auto',
       accounts: {
