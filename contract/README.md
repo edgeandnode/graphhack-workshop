@@ -80,23 +80,23 @@ async function vote(id: string, vote: VoteChoice): Promise<ContractTranscation> 
 
 ```shell
 # compile the smart contracts
-npx hardhat compile
+pnpm hardhat compile
 # clean the built compile output
-npx hardhat clean
+pnpm hardhat clean
 # runs the test suite to validate the contract
-npx hardhat test
+pnpm hardhat test
 # runs the test suite and generates a gas report for the contract functions
-REPORT_GAS=true npx hardhat test
+REPORT_GAS=true pnpm hardhat test
 # runs the test suite and generates a coverage report for the contracts.
 # to view, open the generated ./contracts/coverage/index.html page in a web browser
-npx hardhat coverage
+pnpm hardhat coverage
 # deploy the contracts to a locally running chain using ganache
-npx hardhat run --network localhost scripts/deploy.ts
+pnpm hardhat run --network localhost scripts/deploy.ts
 # linting/prettier
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+pnpm eslint '**/*.{js,ts}'
+pnpm eslint '**/*.{js,ts}' --fix
+pnpm prettier '**/*.{json,sol,md}' --check
+pnpm prettier '**/*.{json,sol,md}' --write
+pnpm solhint 'contracts/**/*.sol'
+pnpm solhint 'contracts/**/*.sol' --fix
 ```
