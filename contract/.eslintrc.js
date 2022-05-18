@@ -9,6 +9,7 @@ module.exports = {
   extends: [
     'standard',
     'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:n/recommended',
   ],
@@ -21,5 +22,6 @@ module.exports = {
     'n/no-missing-import': 'off', // false positives, TS checks this
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 }
