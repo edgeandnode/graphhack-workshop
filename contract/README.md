@@ -20,7 +20,7 @@ Contains a single contract: `ProjectRegistry` which contains allows users to sub
     - `description`: the Project description
     - `imageUrl`: URL of the Project image. preferably an IPFS url
 - `vote`: Vote on a Project
-  - `_projectId`: ID of the already Project in the registry the user wants to upvote/downvote
+  - `_projectId`: ID of the Project already in the registry the user wants to upvote/downvote
   - `_vote`: the users Vote
 
 ### Examples
