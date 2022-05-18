@@ -1,19 +1,19 @@
-import { makeTheme } from "@theme-ui/css/utils";
+import { makeTheme } from '@theme-ui/css/utils'
 
 export const theme = makeTheme({
   colors: {
-    primary: "#03e",
-    background: "#fff",
+    primary: '#03e',
+    background: '#fff',
   },
   buttons: {
     primary: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   },
   layout: {
     container: {
       p: 3,
-      maxWidth: "960px",
+      maxWidth: '960px',
     },
   },
-});
+})
