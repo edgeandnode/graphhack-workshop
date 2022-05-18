@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
+    "@graphhack-workshop/contract": "v0.1.0",
     "@mdx-js/react": "^1",
     "@rainbow-me/rainbowkit": "^0.1.0",
     "@theme-ui/css": "^0.14.5",
