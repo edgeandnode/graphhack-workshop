@@ -1,3 +1,5 @@
+const path = require('path')
+
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   env: {
@@ -44,6 +46,13 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-floating-promises': 'warn',
         '@next/next/no-img-element': 'off', // we don't want to statically optimize user images, and we don't know their domains beforehand
+        '@next/next/no-html-link-for-pages': ['warn', path.join(__dirname, 'ui/pages')],
+      },
+    },
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
   ],
