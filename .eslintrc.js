@@ -43,6 +43,7 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-floating-promises': 'warn',
+        '@next/next/no-img-element': 'off', // we don't want to statically optimize user images, and we don't know their domains beforehand
       },
     },
   ],

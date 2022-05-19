@@ -2,18 +2,28 @@ import { makeTheme } from '@theme-ui/css/utils'
 
 export const theme = makeTheme({
   colors: {
-    primary: '#03e',
     background: '#fff',
-  },
-  buttons: {
     primary: {
-      cursor: 'pointer',
+      64: 'rgba(111, 76, 255, 0.64)',
+      88: 'rgba(111, 76, 255, 0.88)',
+      __default: '#6F4CFF',
+    },
+    neutral: {
+      32: 'rgba(9, 6, 16, 0.32)',
+      64: 'rgba(9, 6, 16, 0.64)',
+      88: 'rgba(9, 6, 16, 0.88)',
     },
   },
-  layout: {
-    container: {
-      p: 3,
-      maxWidth: '960px',
-    },
+  fontSizes: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    md: '1rem',
+    lg: '1.25rem',
+    xl: '1.5rem',
+    xxl: '2.25rem',
+  },
+  space: [],
+  sizes: {
+    $container: '1100px',
   },
 })
