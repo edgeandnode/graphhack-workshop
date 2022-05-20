@@ -1,4 +1,4 @@
-import { makeColorsScale, makeTheme } from '@theme-ui/css/utils'
+import { makeTheme } from '@theme-ui/css/utils'
 import { useEffect, useState } from 'react'
 import { useThemeUI } from 'theme-ui'
 
