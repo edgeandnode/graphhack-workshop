@@ -10,7 +10,10 @@
     "format:check": "prettier --check \"./**/*.ts\" README.md",
     "format": "prettier --write \"./**/*.ts\" README.md",
     "lint": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx}",
-    "lint:fix": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx} --fix"
+    "lint:fix": "eslint -c ./.eslintrc.js **/*.{js,ts,tsx} --fix",
+    "test": "pnpm test --parallel --reporter append-only --aggregate-output",
+    "typecheck": "pnpm typecheck --parallel --reporter append-only --aggregate-output",
+    "ci": "pnpm lint && pnpm typecheck && pnpm test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.24.0",

@@ -36,7 +36,8 @@
     "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
     "deploy:rinkeby": "hardhat run --network rinkeby scripts/deploy.ts",
     "pre-push": "pnpm compile && pnpm test",
-    "ganache": "ganache"
+    "ganache": "ganache",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
