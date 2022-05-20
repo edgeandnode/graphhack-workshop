@@ -48,7 +48,12 @@ const IndexPage: NextPage = () => {
               <li key={project.id}>
                 <Link href={`/project/${project.id}`}>
                   <a>
-                    <ProjectCard imageUrl={project.imageUrl} name={project.name} />
+                    <ProjectCard
+                      imageUrl={project.imageUrl}
+                      name={project.name}
+                      owner={project.owner.id.slice(0, 16) + '...'}
+                      createdAt={new Date(project.createdAt).toDateString()}
+                    />
                   </a>
                 </Link>
               </li>
@@ -57,7 +62,12 @@ const IndexPage: NextPage = () => {
             <li key={i}>
               <Link href={`/project/${i}`}>
                 <a>
-                  <ProjectCard imageUrl="https://placekitten.com/200/200" name={`Project ${i}`} />
+                  <ProjectCard
+                    imageUrl={`https://placekitten.com/200/${200 + i}`}
+                    name={`Project ${i}`}
+                    owner={'0xb3321f0E1591083943Ae2d20AA36adBDD3d55a70'.slice(0, 16) + '...'}
+                    createdAt={new Date().toDateString()}
+                  />
                 </a>
               </Link>
             </li>
