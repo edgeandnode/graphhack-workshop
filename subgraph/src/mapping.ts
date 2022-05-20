@@ -20,9 +20,7 @@ function findOrCreateUser(address: Address, timestamp: BigInt): User {
   }
 
   const createUser = new User(id)
-  createUser.projects = []
   createUser.projectCount = 0
-  createUser.votes = []
   createUser.voteCount = 0
   createUser.createdAt = timestamp
   createUser.updatedAt = timestamp
