@@ -2,6 +2,7 @@ import '../src/global.css'
 
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { ThemeProvider } from 'theme-ui'
 
 import { theme } from '../src/theme'
@@ -27,7 +28,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           >
             <ConnectButton />
           </header>
+
           <Component {...pageProps} />
+
+          <ReactQueryDevtools />
         </QueryClientProvider>
       </WalletProvider>
       <Footer />
