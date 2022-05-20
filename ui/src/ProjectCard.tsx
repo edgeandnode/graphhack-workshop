@@ -11,6 +11,7 @@ export function ProjectCard({ name, imageUrl, owner, createdAt }: ProjectCardPro
       sx={{
         borderRadius: '4px',
         overflow: 'hidden',
+        backgroundColor: 'background.card',
         boxShadow: '0px 4px 24px rgba(30, 37, 44, 0.16)',
         transition: 'box-shadow 250ms linear, transform 250ms linear',
 
@@ -27,7 +28,7 @@ export function ProjectCard({ name, imageUrl, owner, createdAt }: ProjectCardPro
             height: 0,
           },
           '> div': {
-            backgroundColor: '#E5E5E5',
+            backgroundColor: 'background.secondary',
           },
           h2: {
             color: 'neutral.88',

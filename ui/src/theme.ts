@@ -5,6 +5,8 @@ import { useThemeUI } from 'theme-ui'
 const lightMode = {
   background: {
     __default: '#fff',
+    card: '#fff',
+    secondary: '#E5E5E5',
   },
   primary: {
     64: 'rgba(111, 76, 255, 0.64)',
@@ -19,9 +21,11 @@ const lightMode = {
   },
 }
 
-const darkMode = {
+const darkMode: typeof lightMode = {
   background: {
     __default: '#0f0f0f',
+    card: '#000',
+    secondary: '#0c0c0c',
   },
   primary: lightMode.primary,
   neutral: {
