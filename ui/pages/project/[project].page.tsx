@@ -3,12 +3,13 @@ import { useRouter } from 'next/router'
 
 import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
+import { useProjectQuery } from './[project].queries.generated'
 
 const ProjectPage: NextPage = () => {
   const { query } = useRouter()
-  const projectAddress = String(query.project)
+  const projectId = String(query.project)
 
-  console.log({ projectAddress })
+  const { data } = useProjectQuery({ id: projectId })
 
   const name = 'Project Details Page'
   const imageUrl = 'https://placekitten.com/1200/500'
@@ -20,6 +21,8 @@ const ProjectPage: NextPage = () => {
   const handleClick = () => {
     window.alert('Upvote!')
   }
+
+  console.log({ data })
 
   return (
     <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>

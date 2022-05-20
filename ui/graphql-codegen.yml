@@ -1,0 +1,30 @@
+schema:
+  - https://api.studio.thegraph.com/query/23312/projectregistry/v0.0.1
+documents:
+  - './src/**/*.gql'
+  - './pages/**/*.gql'
+generates:
+  './src/graphql-types.generated.ts':
+    plugins:
+      - typescript
+  './src':
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: graphql-types.generated.ts
+      extension: .generated.ts
+    plugins:
+      - typescript-operations
+      - typescript-react-query
+    cacheDir: ./.cache/gql-generated
+config:
+  pureMagicComment: true
+  enumsAsTypes: true
+  documentMode: 'string'
+  strictScalars: true
+  fetcher:
+    endpoint: process.env.SUBGRAPH_URL
+    fetchParams: { headers: { 'Content-Type': 'application/json' } }
+  scalars:
+    BigInt: string
+    BigDecimal: string
+    Bytes: unknown

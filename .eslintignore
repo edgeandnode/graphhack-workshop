@@ -6,3 +6,5 @@ contract/cache
 contract/coverage
 
 subgraph/generated
+
+ui/**/*.generated.ts
