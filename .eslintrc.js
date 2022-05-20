@@ -21,7 +21,8 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
-    'n/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'], version: '>=14.0.0' }],
+    'n/no-unsupported-features/es-builtins': 'off',
+    'n/no-unsupported-features/es-syntax': 'off',
     'n/no-missing-import': 'off', // false positives, TS checks this
     'n/no-unpublished-import': 'off',
 

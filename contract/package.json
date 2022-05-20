@@ -16,6 +16,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs.js",
       "node": "./dist/index.js"
+    },
+    "./addresses.json": {
+      "import": "./addresses.json",
+      "require": "./addresses.json",
+      "node": "./addresses.json"
     }
   },
   "scripts": {
