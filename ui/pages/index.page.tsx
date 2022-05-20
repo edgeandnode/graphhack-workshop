@@ -43,6 +43,38 @@ const IndexPage: NextPage = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
           }}
         >
+          <li
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+            }}
+          >
+            <Link href="/project/submit">
+              <a
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  backgroundColor: 'background.card',
+                  borderRadius: '4px',
+                  boxShadow: '0px 4px 24px rgba(30, 37, 44, 0.16), inset 0 0 0 8px var(--theme-ui-colors-primary-88)',
+                  transition: 'box-shadow 250ms linear, transform 250ms linear',
+                  fontWeight: 600,
+                  color: 'neutral.88',
+
+                  ':hover, a:focus-visible > &': {
+                    boxShadow: '0px 4px 36px rgba(30, 37, 44, 0.32), inset 0 0 0 8px var(--theme-ui-colors-primary-88)',
+                    transform: 'scale(1.05)',
+                  },
+                }}
+              >
+                Submit Project
+              </a>
+            </Link>
+          </li>
           {data &&
             data.projects.map((project) => (
               <li key={project.id}>

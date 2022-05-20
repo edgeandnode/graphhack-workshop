@@ -1,6 +1,6 @@
 import { makeTheme } from '@theme-ui/css/utils'
 import { useEffect, useState } from 'react'
-import { useThemeUI } from 'theme-ui'
+import { ThemeProvider, useThemeUI } from 'theme-ui'
 
 const lightMode = {
   background: {

@@ -11,7 +11,7 @@ import {
 import { ReactNode } from 'react'
 import { chain, createClient, WagmiProvider } from 'wagmi'
 
-import { theme, useColorMode } from './theme'
+import { ColorModeName, theme, useColorMode } from './theme'
 
 const { chains, provider } = configureChains(
   [chain.rinkeby],
