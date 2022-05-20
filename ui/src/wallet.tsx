@@ -8,8 +8,7 @@ import {
   midnightTheme,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit'
-import { ReactNode, useEffect, useState } from 'react'
-import { useThemeUI } from 'theme-ui'
+import { ReactNode } from 'react'
 import { chain, createClient, WagmiProvider } from 'wagmi'
 
 import { theme, useColorMode } from './theme'
@@ -46,7 +45,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <WagmiProvider client={wagmiClient}>
-      <RainbowKitProvider chains={chains} theme={rainbowKitThemes[colorMode]}>
+      <RainbowKitProvider chains={chains} theme={rainbowKitThemes[colorMode]} showRecentTransactions>
         {children}
       </RainbowKitProvider>
     </WagmiProvider>
