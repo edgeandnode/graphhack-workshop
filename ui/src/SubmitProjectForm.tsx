@@ -63,7 +63,7 @@ export function SubmitProjectForm() {
       )}
       <label>
         <div>Name</div>
-        <Input name="name" type="text" required />
+        <Input name="name" type="text" required autoComplete="off" />
       </label>
       <label>
         <div>Image URL</div>
