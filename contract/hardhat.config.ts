@@ -10,11 +10,6 @@ import { HardhatUserConfig, task } from 'hardhat/config'
 
 dotenv.config()
 
-const { INFURA_KEY } = process.env
-if (!INFURA_KEY) {
-  throw new Error('process.env.INFURA_KEY is missing')
-}
-
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
@@ -33,7 +28,7 @@ const config: HardhatUserConfig = {
   networks: {
     rinkeby: {
       chainId: 4,
-      url: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
+      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY!}`,
       gasPrice: 'auto',
       gas: 'auto',
       accounts: {
