@@ -1,6 +1,10 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
-export function Button(props: ComponentPropsWithoutRef<'button'>) {
+export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  icon?: ReactNode
+}
+
+export function Button({ children, icon, ...rest }: ButtonProps) {
   return (
     <button
       sx={{
@@ -10,11 +14,20 @@ export function Button(props: ComponentPropsWithoutRef<'button'>) {
         p: '1rem 2rem',
         fontSize: '0.875rem',
         fontWeight: 600,
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '0.25rem',
+        alignItems: 'center',
+        justifyContent: 'center',
         ':hover, :focus-visible': {
           backgroundColor: 'primary',
         },
+        '> svg': icon && { ml: '-0.5rem' },
       }}
-      {...props}
-    />
+      {...rest}
+    >
+      {icon}
+      {children}
+    </button>
   )
 }
