@@ -1,9 +1,24 @@
 import { ProjectRegistry } from '@graphhack-workshop/contract'
 import { FormEventHandler, useState } from 'react'
-import { Input } from 'theme-ui'
+import { Input, ThemeUICSSObject } from 'theme-ui'
+import { useAccount } from 'wagmi'
 
 import { Button } from './Button'
+import { Heading } from './Heading'
+import { ProjectCard } from './ProjectCard'
 import { useSubmitProject } from './useSubmitProject'
+
+const containerStyle: ThemeUICSSObject = {
+  maxWidth: '40rem',
+  backgroundColor: 'background.card',
+  boxShadow: '0px 4px 24px rgba(30, 37, 44, 0.16)',
+  p: '2rem',
+  borderRadius: '8px',
+  mx: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+}
 
 type SubmitProjectFormControls = {
   [P in keyof ProjectRegistry.ProjectMetadataStruct]: HTMLInputElement
@@ -15,6 +30,7 @@ interface SubmitProjectFormElement extends HTMLFormElement {
 
 export function SubmitProjectForm() {
   const submitProject = useSubmitProject()
+  const account = useAccount()
 
   const handleSubmit: FormEventHandler<SubmitProjectFormElement> = (event) => {
     event.preventDefault()
@@ -31,20 +47,67 @@ export function SubmitProjectForm() {
 
   if (submitProject.error) console.error(submitProject.error)
 
+  if (submitProject.response && submitProject.lastSubmitted) {
+    console.log(submitProject.response)
+    const project = submitProject.lastSubmitted
+    const ownerAddress = account.data?.address
+
+    return (
+      <div sx={containerStyle}>
+        <Heading as="h2" sx={{ fontSize: 'lg', letterSpacing: '-0.4px', color: 'neutral.64' }}>
+          Submitted
+        </Heading>
+        <div sx={{ display: 'flex', gap: '1rem' }}>
+          <ProjectCard
+            name={project.name}
+            owner={ownerAddress?.slice(0, 16) + '...' || ''}
+            imageUrl={project.imageUrl}
+            sx={{ width: '200px', flexShrink: 0, border: '1px solid', borderColor: 'neutral.32' }}
+          />
+          <pre
+            sx={{
+              backgroundColor: 'background',
+              borderRadius: '4px',
+              color: 'neutral.88',
+              flex: 1,
+              p: '0.75rem',
+              border: '1px solid',
+              borderColor: 'neutral.32',
+              overflow: 'auto',
+            }}
+          >
+            {JSON.stringify({ ...project, owner: ownerAddress }, null, 2)}
+          </pre>
+        </div>
+        <Button onClick={() => submitProject.reset()}>Add Another Project</Button>
+        <a
+          href={`https://rinkeby.etherscan.io/tx/${submitProject.response.hash}`}
+          target="__blank"
+          sx={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            textDecorationColor: 'primary.64',
+            borderRadius: '4px',
+            p: '1rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            ':hover, :focus-visible': {
+              backgroundColor: 'primary.08',
+            },
+          }}
+        >
+          See Transaction on Etherscan
+        </a>
+      </div>
+    )
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
       sx={{
-        maxWidth: '40rem',
-        backgroundColor: 'background.card',
-        boxShadow: '0px 4px 24px rgba(30, 37, 44, 0.16)',
-        p: '2rem',
-        borderRadius: '8px',
-        mx: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-
+        ...containerStyle,
         '> label': {
           '> div': { pb: '0.5rem', color: 'neutral.64', fontWeight: 500 },
           input: {
@@ -81,8 +144,8 @@ export function SubmitProjectForm() {
         </div>
         <Input name="description" type="text" />
       </label>
-      <Button type="submit" sx={{ mt: '1rem' }}>
-        Submit Project
+      <Button type="submit" sx={{ mt: '1rem' }} disabled={submitProject.isLoading}>
+        {submitProject.isLoading ? 'Submitting' : 'Submit'} Project
       </Button>
     </form>
   )
