@@ -1,5 +1,5 @@
 schema:
-  - https://api.studio.thegraph.com/query/23312/projectregistry/v0.0.4
+  - https://api.studio.thegraph.com/query/23312/projectregistry/v6
 documents:
   - './src/**/*.gql'
   - './pages/**/*.gql'
