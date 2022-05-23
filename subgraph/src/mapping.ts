@@ -44,7 +44,7 @@ export function handleProjectUpdated(event: ProjectUpdated): void {
   const timestamp = event.block.timestamp
   const projectId = event.params.projectId
   const owner = event.params.owner
-  const name = event.params.owner
+  const name = event.params.name
   const subtitle = event.params.subtitle
   const description = event.params.description
   const imageUrl = event.params.imageUrl
