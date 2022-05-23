@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import { Heading } from '../src/Heading'
 import { ProjectCard } from '../src/ProjectCard'
-import { useSubmitProject } from '../src/useSubmitProject'
 import { useProjectsQuery } from './index.queries.generated'
 
 const IndexPage: NextPage = () => {
