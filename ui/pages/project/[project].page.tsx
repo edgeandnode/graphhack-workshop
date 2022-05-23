@@ -1,10 +1,9 @@
-import { isAddress } from 'ethers/lib/utils'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
-import { ProjectQuery, useProjectQuery } from './[project].queries.generated'
+import { useProjectQuery } from './[project].queries.generated'
 
 const ProjectPage: NextPage = () => {
   const { query } = useRouter()
@@ -12,8 +11,14 @@ const ProjectPage: NextPage = () => {
 
   const { data, error } = useProjectQuery({ id: projectId })
 
-  const handleClick = () => {
-    window.alert('Upvote!')
+  if (data && data.project === null) {
+    return (
+      <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
+        <header sx={{ pb: '2rem' }}>
+          <Heading>Project Not Found</Heading>
+        </header>
+      </main>
+    )
   }
 
   if (error) {
@@ -22,16 +27,19 @@ const ProjectPage: NextPage = () => {
         <header sx={{ pb: '2rem' }}>
           <Heading>Something went wrong</Heading>
         </header>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
+        <pre sx={{ color: 'orangered' }}>{(error as Error).toString()}</pre>
       </main>
     )
   }
 
-  let project = data?.project
+  const project = data?.project
 
-  if (!isAddress(projectId)) {
-    project = placeholderData()
+  const handleUpvote = () => {
+    window.alert('Upvote!')
   }
+  const handleDownvote = () => {}
+
+  const score = project && project.upvotes - project.downvotes
 
   return (
     <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
@@ -54,7 +62,7 @@ const ProjectPage: NextPage = () => {
           <Heading as="h2" sx={{ fontSize: 'xl' }}>
             Project Description
           </Heading>
-          <p sx={{ lineHeight: 2, fontWeight: 400 }}>{project?.description}</p>
+          <p sx={{ lineHeight: 1.8, fontWeight: 400, mt: '0.5rem' }}>{project?.description}</p>
         </div>
         <dl>
           <div>
@@ -67,23 +75,55 @@ const ProjectPage: NextPage = () => {
           </div>
         </dl>
       </section>
-      <Button onClick={handleClick}>Upvote</Button>
+      <div sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
+        <Button onClick={handleUpvote} icon={<ArrowUpIcon />}>
+          Upvote
+        </Button>
+        <Button onClick={handleDownvote} icon={<ArrowDownIcon />}>
+          Downvote
+        </Button>
+        {score != null && (
+          <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
+            Total:
+            <span sx={{ pl: '0.5rem', color: 'neutral' }}>
+              {score > 0 ? '+' : score < 0 ? '-' : ''}
+              {score}
+            </span>
+          </strong>
+        )}
+      </div>
     </main>
   )
 }
 
 export default ProjectPage
 
-function placeholderData(): ProjectQuery['project'] {
-  const name = 'Project Details Page'
-  const imageUrl = 'https://placekitten.com/1200/500'
-  const subtitle = 'Lorem ipsum dolor sit amet'
-  const description =
-    'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.  Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.  Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  const owner = { id: '0xb3321f0E1591083943Ae2d20AA36adBDD3d55a70' }
-  const upvotes = 5
-  const downvotes = 2
-  const createdAt = new Date().toString()
+function ArrowUpIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      sx={{ size: '1.5rem' }}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+    </svg>
+  )
+}
 
-  return { name, imageUrl, subtitle, description, owner, upvotes, downvotes, createdAt }
+function ArrowDownIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      sx={{ size: '1.5rem' }}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+    </svg>
+  )
 }
