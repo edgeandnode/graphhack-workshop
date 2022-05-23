@@ -21,6 +21,8 @@ jobs:
           cache: 'pnpm'
       - name: Install
         run: pnpm install
+      - name: Codegen
+        run: pnpm codegen
       - name: Build
         run: pnpm build
       - name: Test, Lint and Typecheck
