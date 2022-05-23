@@ -25,10 +25,8 @@
   },
   "scripts": {
     "clean": "hardhat clean",
-    "precompile": "pnpm clean",
-    "compile": "hardhat compile",
-    "prebuild": "pnpm compile",
-    "build": "vite build",
+    "compile": "pnpm clean && hardhat compile",
+    "build": "pnpm compile && vite build",
     "test": "hardhat test",
     "test:report-gas": "REPORT_GAS=true hardhat test",
     "test:coverage": "hardhat coverage",
