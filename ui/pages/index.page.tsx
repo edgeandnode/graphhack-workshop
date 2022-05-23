@@ -84,7 +84,7 @@ const IndexPage: NextPage = () => {
                       imageUrl={project.imageUrl}
                       name={project.name}
                       owner={project.owner.id.slice(0, 16) + '...'}
-                      createdAt={new Date(project.createdAt).toDateString()}
+                      createdAt={new Date(Number(project.createdAt) * 1000).toDateString()}
                     />
                   </a>
                 </Link>
