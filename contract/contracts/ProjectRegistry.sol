@@ -63,7 +63,7 @@ contract ProjectRegistry {
   event ProjectUpdated(
     uint256 indexed projectId,
     address indexed owner,
-    string indexed name,
+    string name,
     string subtitle,
     string description,
     string imageUrl,
