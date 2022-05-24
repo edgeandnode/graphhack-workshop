@@ -1,6 +1,6 @@
 import { ProjectRegistry } from '@graphhack-workshop/contract'
 import { FormEventHandler, useState } from 'react'
-import { Input, ThemeUICSSObject } from 'theme-ui'
+import { Input, Textarea, ThemeUICSSObject } from 'theme-ui'
 import { useAccount } from 'wagmi'
 
 import { Button } from './Button'
@@ -110,7 +110,7 @@ export function SubmitProjectForm() {
         ...containerStyle,
         '> label': {
           '> div': { pb: '0.5rem', color: 'neutral.64', fontWeight: 500 },
-          input: {
+          'input, textarea': {
             textIndent: '1rem',
             py: '1rem',
             borderColor: 'neutral.32',
@@ -142,7 +142,7 @@ export function SubmitProjectForm() {
         <div>
           Description <small>(optional)</small>
         </div>
-        <Input name="description" type="text" />
+        <Textarea name="description" rows={5} />
       </label>
       <Button type="submit" sx={{ mt: '1rem' }} disabled={submitProject.isLoading}>
         {submitProject.isLoading ? 'Submitting' : 'Submit'} Project
