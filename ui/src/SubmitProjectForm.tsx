@@ -47,9 +47,9 @@ export function SubmitProjectForm() {
 
   if (submitProject.error) console.error(submitProject.error)
 
-  if (submitProject.response && submitProject.lastSubmitted) {
+  if (submitProject.response && submitProject.lastArgs) {
     console.log(submitProject.response)
-    const project = submitProject.lastSubmitted
+    const project = submitProject.lastArgs[0]
     const ownerAddress = account.data?.address
 
     return (
