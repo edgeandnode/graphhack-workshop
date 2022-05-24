@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 
 import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
+import { DIDNT_VOTE, DOWNVOTE, UPVOTE, useCurrentUserVote } from '../../src/useCurrentUserVote'
 import { useVote } from '../../src/useVote'
 import { ProjectQuery, useProjectQuery } from './[project].queries.generated'
 
@@ -68,30 +69,37 @@ type Project = Exclude<ProjectQuery['project'], undefined | null>
 function ProjectVotingSection({ project, projectId }: { project: Project; projectId: string }) {
   // TODO: The user can't vote if they already voted, so we need to check this.
 
+  const userVoteOnChain = useCurrentUserVote(projectId)
+
   const vote = useVote(project.name || '')
 
   const handleUpvote = () => vote.write(projectId, 1)
   const handleDownvote = () => vote.write(projectId, 2)
 
-  const score = project && project.upvotes - project.downvotes
+  const score = project.upvotes - project.downvotes
 
   return (
     <section sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
-      <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={!project}>
-        Upvote
-      </Button>
-      <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={!project}>
-        Downvote
-      </Button>
-      {score != null && (
-        <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
-          Total:
-          <span sx={{ pl: '0.5rem', color: 'neutral' }}>
-            {score > 0 ? '+' : score < 0 ? '-' : ''}
-            {score}
-          </span>
-        </strong>
+      {userVoteOnChain === DIDNT_VOTE && (
+        <>
+          <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={vote.isLoading}>
+            Upvote
+          </Button>
+          <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={vote.isLoading}>
+            Downvote
+          </Button>{' '}
+        </>
       )}
+      <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
+        Total:
+        <span sx={{ pl: '0.5rem', color: 'neutral' }}>
+          {score > 0 ? '+' : score < 0 ? '-' : ''}
+          {score}
+        </span>
+      </strong>
+      {userVoteOnChain === UPVOTE && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| You upvoted 👍</p>}
+      {userVoteOnChain === DOWNVOTE && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| You downvoted 👎</p>}
+      {vote.isLoading && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| Transaction pending...</p>}
     </section>
   )
 }
