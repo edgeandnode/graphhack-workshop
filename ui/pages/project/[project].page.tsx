@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
 import { useVote } from '../../src/useVote'
-import { useProjectQuery } from './[project].queries.generated'
+import { ProjectQuery, useProjectQuery } from './[project].queries.generated'
 
 const ProjectPage: NextPage = () => {
   const { query } = useRouter()
@@ -13,8 +13,6 @@ const ProjectPage: NextPage = () => {
 
   const { data, error } = useProjectQuery({ id: projectId })
   const project = data?.project
-
-  const vote = useVote(project?.name || '')
 
   if (data && project === null) {
     return <ProjectPageLayout heading="Project Not Found" />
@@ -27,11 +25,6 @@ const ProjectPage: NextPage = () => {
       </ProjectPageLayout>
     )
   }
-
-  const handleUpvote = () => vote.write(projectId, 1)
-  const handleDownvote = () => vote.write(projectId, 2)
-
-  const score = project && project.upvotes - project.downvotes
 
   return (
     <ProjectPageLayout heading={project?.name || 'Loading...'} subheading={project?.subtitle}>
@@ -52,7 +45,7 @@ const ProjectPage: NextPage = () => {
           </Heading>
           <p sx={{ lineHeight: 1.8, fontWeight: 400, mt: '0.5rem' }}>{project?.description}</p>
         </div>
-        <dl>
+        <dl sx={{ ml: 'auto' }}>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Owner</dt>
             <dt>{project?.owner?.id}</dt>
@@ -63,28 +56,45 @@ const ProjectPage: NextPage = () => {
           </div>
         </dl>
       </section>
-      <div sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
-        <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={!project}>
-          Upvote
-        </Button>
-        <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={!project}>
-          Downvote
-        </Button>
-        {score != null && (
-          <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
-            Total:
-            <span sx={{ pl: '0.5rem', color: 'neutral' }}>
-              {score > 0 ? '+' : score < 0 ? '-' : ''}
-              {score}
-            </span>
-          </strong>
-        )}
-      </div>
+      {project && <ProjectVotingSection project={project} projectId={projectId} />}
     </ProjectPageLayout>
   )
 }
 
 export default ProjectPage
+
+type Project = Exclude<ProjectQuery['project'], undefined | null>
+
+function ProjectVotingSection({ project, projectId }: { project: Project; projectId: string }) {
+  // TODO: The user can't vote if they already voted, so we need to check this.
+
+  const vote = useVote(project.name || '')
+
+  const handleUpvote = () => vote.write(projectId, 1)
+  const handleDownvote = () => vote.write(projectId, 2)
+
+  const score = project && project.upvotes - project.downvotes
+
+  return (
+    <section sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
+      <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={!project}>
+        Upvote
+      </Button>
+      <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={!project}>
+        Downvote
+      </Button>
+      {score != null && (
+        <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
+          Total:
+          <span sx={{ pl: '0.5rem', color: 'neutral' }}>
+            {score > 0 ? '+' : score < 0 ? '-' : ''}
+            {score}
+          </span>
+        </strong>
+      )}
+    </section>
+  )
+}
 
 interface ProjectPageLayoutProps {
   heading: ReactNode
