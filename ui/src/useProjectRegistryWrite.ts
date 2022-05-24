@@ -8,7 +8,7 @@ type Args<TFunctionName extends keyof ProjectRegistry['functions']> = Parameters
   ProjectRegistry['functions'][TFunctionName]
 >
 
-export function useProjectRegistry<TFunctionName extends keyof ProjectRegistry['functions']>(
+export function useProjectRegistryWrite<TFunctionName extends keyof ProjectRegistry['functions']>(
   functionName: TFunctionName,
   options: { description: (...args: Args<TFunctionName>) => string },
 ) {

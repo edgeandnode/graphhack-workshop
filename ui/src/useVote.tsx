@@ -1,11 +1,11 @@
 import { BigNumber } from 'ethers'
 
-import { useProjectRegistry } from './useProjectRegistry'
+import { useProjectRegistryWrite } from './useProjectRegistryWrite'
 
 export function useVote(projectName: string) {
-  return useProjectRegistry('vote', {
+  return useProjectRegistryWrite('vote', {
     description: (_projectId, vote) => {
-      return BigNumber.from(vote).eq(1) ? `Upvote ${projectName}` : `Downvote ${projectName}`
+      return BigNumber.from(vote).eq(1) ? `Upvote "${projectName}"` : `Downvote "${projectName}"`
     },
   })
 }
