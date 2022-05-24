@@ -1,8 +1,10 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
 
 import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
+import { useVote } from '../../src/useVote'
 import { useProjectQuery } from './[project].queries.generated'
 
 const ProjectPage: NextPage = () => {
@@ -10,43 +12,29 @@ const ProjectPage: NextPage = () => {
   const projectId = String(query.project)
 
   const { data, error } = useProjectQuery({ id: projectId })
+  const project = data?.project
 
-  if (data && data.project === null) {
-    return (
-      <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
-        <header sx={{ pb: '2rem' }}>
-          <Heading>Project Not Found</Heading>
-        </header>
-      </main>
-    )
+  const vote = useVote(project?.name || '')
+
+  if (data && project === null) {
+    return <ProjectPageLayout heading="Project Not Found" />
   }
 
   if (error) {
     return (
-      <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
-        <header sx={{ pb: '2rem' }}>
-          <Heading>Something went wrong</Heading>
-        </header>
+      <ProjectPageLayout heading="Something went wrong">
         <pre sx={{ color: 'orangered' }}>{(error as Error).toString()}</pre>
-      </main>
+      </ProjectPageLayout>
     )
   }
 
-  const project = data?.project
-
-  const handleUpvote = () => {
-    window.alert('Upvote!')
-  }
-  const handleDownvote = () => {}
+  const handleUpvote = () => vote.write(projectId, 1)
+  const handleDownvote = () => vote.write(projectId, 2)
 
   const score = project && project.upvotes - project.downvotes
 
   return (
-    <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
-      <header sx={{ pb: '2rem' }}>
-        <Heading>{project?.name || 'Loading...'}</Heading>
-        <p sx={{ height: '1.5rem' }}>{project?.subtitle}</p>
-      </header>
+    <ProjectPageLayout heading={project?.name || 'Loading...'} subheading={project?.subtitle}>
       <img
         width="100%"
         alt=""
@@ -76,10 +64,10 @@ const ProjectPage: NextPage = () => {
         </dl>
       </section>
       <div sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
-        <Button onClick={handleUpvote} icon={<ArrowUpIcon />}>
+        <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={!project}>
           Upvote
         </Button>
-        <Button onClick={handleDownvote} icon={<ArrowDownIcon />}>
+        <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={!project}>
           Downvote
         </Button>
         {score != null && (
@@ -92,11 +80,28 @@ const ProjectPage: NextPage = () => {
           </strong>
         )}
       </div>
-    </main>
+    </ProjectPageLayout>
   )
 }
 
 export default ProjectPage
+
+interface ProjectPageLayoutProps {
+  heading: ReactNode
+  subheading?: ReactNode
+  children?: ReactNode
+}
+function ProjectPageLayout({ heading, subheading, children }: ProjectPageLayoutProps) {
+  return (
+    <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
+      <header sx={{ pb: '2rem' }}>
+        <Heading>{heading}</Heading>
+        <p sx={{ height: '1.5rem' }}>{subheading}</p>
+      </header>
+      {children}
+    </main>
+  )
+}
 
 function ArrowUpIcon() {
   return (
