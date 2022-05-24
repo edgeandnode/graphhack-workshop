@@ -48,12 +48,12 @@ const ProjectPage: NextPage = () => {
         </div>
         <dl sx={{ ml: 'auto', '> div': { display: 'flex', justifyContent: 'space-between' }, dt: { pr: '1rem' } }}>
           <div>
-            <dt sx={{ color: 'neutral.64' }}>Owner</dt>
-            <dt>{project?.owner?.id}</dt>
-          </div>
-          <div>
             <dt sx={{ color: 'neutral.64' }}>Created At</dt>
             <dt>{project?.createdAt}</dt>
+          </div>
+          <div>
+            <dt sx={{ color: 'neutral.64' }}>Owner</dt>
+            <dt>{project?.owner?.id}</dt>
           </div>
         </dl>
       </section>
