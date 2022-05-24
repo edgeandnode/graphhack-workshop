@@ -49,7 +49,12 @@ const ProjectPage: NextPage = () => {
         <dl sx={{ ml: 'auto', '> div': { display: 'flex', justifyContent: 'space-between' }, dt: { pr: '1rem' } }}>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Created At</dt>
-            <dt>{project?.createdAt}</dt>
+            <dt>
+              {project?.createdAt &&
+                new Date(Number(project.createdAt) * 1000).toLocaleDateString('en-GB', {
+                  dateStyle: 'long',
+                })}
+            </dt>
           </div>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Owner</dt>
