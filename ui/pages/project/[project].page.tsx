@@ -46,7 +46,7 @@ const ProjectPage: NextPage = () => {
           </Heading>
           <p sx={{ lineHeight: 1.8, fontWeight: 400, mt: '0.5rem' }}>{project?.description}</p>
         </div>
-        <dl sx={{ ml: 'auto' }}>
+        <dl sx={{ ml: 'auto', '> div': { display: 'flex', justifyContent: 'space-between' }, dt: { pr: '1rem' } }}>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Owner</dt>
             <dt>{project?.owner?.id}</dt>
