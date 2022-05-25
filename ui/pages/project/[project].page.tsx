@@ -58,7 +58,29 @@ const ProjectPage: NextPage = () => {
           </div>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Owner</dt>
-            <dt>{project?.owner?.id}</dt>
+            <dt>
+              {project?.owner?.id && (
+                <a
+                  href={`https://rinkeby.etherscan.io/address/${project?.owner?.id}`}
+                  target="__blank"
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    textDecorationColor: 'primary.64',
+                    borderRadius: '4px',
+                    p: '0.125rem 0.25rem',
+                    m: '-0.125rem -0.25rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    ':hover, :focus-visible': {
+                      backgroundColor: 'primary.08',
+                    },
+                  }}
+                >
+                  {project.owner.id}
+                </a>
+              )}
+            </dt>
           </div>
         </dl>
       </section>
@@ -72,8 +94,6 @@ export default ProjectPage
 type Project = Exclude<ProjectQuery['project'], undefined | null>
 
 function ProjectVotingSection({ project, projectId }: { project: Project; projectId: string }) {
-  // TODO: The user can't vote if they already voted, so we need to check this.
-
   const userVoteOnChain = useCurrentUserVote(projectId)
 
   const vote = useVote(project.name || '')
