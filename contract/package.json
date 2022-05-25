@@ -16,22 +16,26 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs.js",
       "node": "./dist/index.js"
+    },
+    "./addresses.json": {
+      "import": "./addresses.json",
+      "require": "./addresses.json",
+      "node": "./addresses.json"
     }
   },
   "scripts": {
-    "clean": "npx hardhat clean",
-    "precompile": "pnpm clean",
-    "compile": "npx hardhat compile",
-    "prebuild": "pnpm compile",
-    "build": "vite build",
-    "test": "npx hardhat test",
-    "test:report-gas": "REPORT_GAS=true npx hardhat test",
-    "test:coverage": "npx hardhat coverage",
+    "clean": "hardhat clean",
+    "compile": "pnpm clean && hardhat compile",
+    "build": "pnpm compile && vite build",
+    "test": "hardhat test",
+    "test:report-gas": "REPORT_GAS=true hardhat test",
+    "test:coverage": "hardhat coverage",
     "deploy": "hardhat migrate",
-    "deploy:local": "npx hardhat run --network localhost scripts/deploy.ts",
-    "deploy:rinkeby": "npx hardhat run --network rinkeby scripts/deploy.ts",
+    "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
+    "deploy:rinkeby": "hardhat run --network rinkeby scripts/deploy.ts",
     "pre-push": "pnpm compile && pnpm test",
-    "ganache": "ganache"
+    "ganache": "ganache",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",

@@ -1,0 +1,14 @@
+query Projects {
+  projects {
+    id
+    name
+    imageUrl
+    description
+    createdAt
+    upvotes
+    downvotes
+    owner {
+      id
+    }
+  }
+}

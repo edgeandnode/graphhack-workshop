@@ -1,3 +1,5 @@
+const path = require('path')
+
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   env: {
@@ -19,7 +21,8 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {
-    'n/no-unsupported-features/es-syntax': ['error', { ignores: ['modules'], version: '>=14.0.0' }],
+    'n/no-unsupported-features/es-builtins': 'off',
+    'n/no-unsupported-features/es-syntax': 'off',
     'n/no-missing-import': 'off', // false positives, TS checks this
     'n/no-unpublished-import': 'off',
 
@@ -43,6 +46,14 @@ module.exports = {
       },
       rules: {
         '@typescript-eslint/no-floating-promises': 'warn',
+        '@next/next/no-img-element': 'off', // we don't want to statically optimize user images, and we don't know their domains beforehand
+        '@next/next/no-html-link-for-pages': ['warn', path.join(__dirname, 'ui/pages')],
+      },
+    },
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
   ],

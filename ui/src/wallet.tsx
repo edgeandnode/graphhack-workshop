@@ -1,8 +1,17 @@
 import '@rainbow-me/rainbowkit/styles.css'
 
-import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import {
+  apiProvider,
+  configureChains,
+  getDefaultWallets,
+  lightTheme,
+  midnightTheme,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit'
 import { ReactNode } from 'react'
 import { chain, createClient, WagmiProvider } from 'wagmi'
+
+import { theme, useColorMode } from './theme'
 
 const { chains, provider } = configureChains(
   [chain.rinkeby],
@@ -20,10 +29,25 @@ const wagmiClient = createClient({
   provider,
 })
 
+const rainbowKitThemes = {
+  light: lightTheme({
+    accentColor: theme.colors.primary.__default,
+    accentColorForeground: theme.colors.background.__default,
+  }),
+  dark: midnightTheme({
+    accentColor: theme.colors.primary.__default,
+    accentColorForeground: theme.colors.background.__default,
+  }),
+}
+
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
+  const colorMode = useColorMode()
+
   return (
     <WagmiProvider client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+      <RainbowKitProvider chains={chains} theme={rainbowKitThemes[colorMode]} showRecentTransactions>
+        {children}
+      </RainbowKitProvider>
     </WagmiProvider>
   )
 }
