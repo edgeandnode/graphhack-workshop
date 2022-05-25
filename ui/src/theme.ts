@@ -9,6 +9,7 @@ const lightMode = {
     secondary: '#E5E5E5',
   },
   primary: {
+    '08': 'rgba(111, 76, 255, 0.08)',
     64: 'rgba(111, 76, 255, 0.64)',
     88: 'rgba(111, 76, 255, 0.88)',
     __default: '#6F4CFF',

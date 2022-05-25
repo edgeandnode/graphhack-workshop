@@ -10,5 +10,12 @@ query Project($id: ID!) {
     owner {
       id
     }
+    votes {
+      user {
+        id
+      }
+      vote
+      timestamp
+    }
   }
 }

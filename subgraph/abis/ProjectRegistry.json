@@ -15,7 +15,7 @@
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "string",
         "name": "name",
         "type": "string"
@@ -87,19 +87,51 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_projectId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
     ],
     "name": "getProject",
     "outputs": [
       {
         "components": [
-          { "internalType": "address", "name": "owner", "type": "address" },
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "string", "name": "subtitle", "type": "string" },
-          { "internalType": "string", "name": "imageUrl", "type": "string" },
-          { "internalType": "string", "name": "description", "type": "string" },
-          { "internalType": "uint256", "name": "upvotes", "type": "uint256" },
-          { "internalType": "uint256", "name": "downvotes", "type": "uint256" }
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "subtitle",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "upvotes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "downvotes",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct ProjectRegistry.Project",
         "name": "",
@@ -111,17 +143,35 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_projectId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      }
     ],
     "name": "getProjectOwner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_projectId", "type": "uint256" },
-      { "internalType": "address", "name": "_voter", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_voter",
+        "type": "address"
+      }
     ],
     "name": "getProjectVote",
     "outputs": [
@@ -135,23 +185,55 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "projectOwnerSeqIds",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "projectOwners",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "address", "name": "", "type": "address" }
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "projectOwners",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
     "name": "projectVotes",
     "outputs": [
@@ -165,16 +247,50 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "projects",
     "outputs": [
-      { "internalType": "address", "name": "owner", "type": "address" },
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "string", "name": "subtitle", "type": "string" },
-      { "internalType": "string", "name": "imageUrl", "type": "string" },
-      { "internalType": "string", "name": "description", "type": "string" },
-      { "internalType": "uint256", "name": "upvotes", "type": "uint256" },
-      { "internalType": "uint256", "name": "downvotes", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "imageUrl",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "upvotes",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "downvotes",
+        "type": "uint256"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -183,10 +299,26 @@
     "inputs": [
       {
         "components": [
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "string", "name": "subtitle", "type": "string" },
-          { "internalType": "string", "name": "imageUrl", "type": "string" },
-          { "internalType": "string", "name": "description", "type": "string" }
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "subtitle",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          }
         ],
         "internalType": "struct ProjectRegistry.ProjectMetadata",
         "name": "_metadata",
@@ -200,13 +332,33 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_projectId", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
       {
         "components": [
-          { "internalType": "string", "name": "name", "type": "string" },
-          { "internalType": "string", "name": "subtitle", "type": "string" },
-          { "internalType": "string", "name": "imageUrl", "type": "string" },
-          { "internalType": "string", "name": "description", "type": "string" }
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "subtitle",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          }
         ],
         "internalType": "struct ProjectRegistry.ProjectMetadata",
         "name": "_metadata",
@@ -220,7 +372,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_projectId", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "_projectId",
+        "type": "uint256"
+      },
       {
         "internalType": "enum ProjectRegistry.VoteChoice",
         "name": "_vote",

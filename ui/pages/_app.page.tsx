@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ThemeProvider } from 'theme-ui'
 
+import { BackToHomeLink } from '../src/BackToHomeLink'
 import { theme } from '../src/theme'
 import { ConnectButton, WalletProvider } from '../src/wallet'
 
@@ -12,7 +13,7 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { keepPreviousData: true } },
 })
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <WalletProvider>
@@ -21,11 +22,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             sx={{
               display: 'flex',
               p: '1rem 1rem 0 1rem',
-              justifyContent: 'flex-end',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               maxWidth: '$container',
               mx: 'auto',
             }}
           >
+            {router.pathname === '/' ? <div /> : <BackToHomeLink />}
             <ConnectButton />
           </header>
 

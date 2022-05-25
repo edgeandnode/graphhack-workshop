@@ -1,11 +1,13 @@
-export interface ProjectCardProps {
+import { ComponentPropsWithoutRef } from 'react'
+
+export interface ProjectCardProps extends ComponentPropsWithoutRef<'article'> {
   name: string
   imageUrl: string
   owner: string
-  createdAt: string
+  createdAt?: string
 }
 
-export function ProjectCard({ name, imageUrl, owner, createdAt }: ProjectCardProps) {
+export function ProjectCard({ name, imageUrl, owner, createdAt, ...rest }: ProjectCardProps) {
   return (
     <article
       sx={{
@@ -40,6 +42,7 @@ export function ProjectCard({ name, imageUrl, owner, createdAt }: ProjectCardPro
           },
         },
       }}
+      {...rest}
     >
       <img
         width="100%"
