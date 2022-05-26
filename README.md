@@ -2,8 +2,10 @@
 
 ## Requirements
 
-- **PNPM 7**
+- **[PNPM] [7](https://github.com/pnpm/pnpm/releases/tag/v7.0.0)**
 - **Node >=14**
+
+[pnpm]: https://pnpm.io/
 
 ## Contributing
 
