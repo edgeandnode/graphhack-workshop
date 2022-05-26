@@ -6,6 +6,7 @@
   "private": true,
   "packageManager": "pnpm@7.1.5",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "pnpm -r build",
     "build:ui": "pnpm -r --filter ./ui build",
     "dev:ui": "pnpm -r --filter ./ui dev",
