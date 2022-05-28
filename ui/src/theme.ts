@@ -31,6 +31,7 @@ const darkMode: typeof lightMode = {
   },
   primary: lightMode.primary,
   neutral: {
+    16: 'rgba(255, 240, 255, 0.16)',
     32: 'rgba(235, 240, 255, 0.32)',
     64: 'rgba(235, 240, 255, 0.64)',
     88: 'rgba(235, 240, 255, 0.88)',
