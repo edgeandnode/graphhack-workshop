@@ -15,6 +15,7 @@ const lightMode = {
     __default: '#6F4CFF',
   },
   neutral: {
+    16: 'rgba(9, 6, 16, 0.16)',
     32: 'rgba(9, 6, 16, 0.32)',
     64: 'rgba(9, 6, 16, 0.64)',
     88: 'rgba(9, 6, 16, 0.88)',
