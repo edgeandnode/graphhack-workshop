@@ -32,6 +32,7 @@ const IndexPage: NextPage = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
+              height: '222px',
             }}
           >
             <Link href="/project/submit">
@@ -59,7 +60,7 @@ const IndexPage: NextPage = () => {
               </a>
             </Link>
           </li>
-          {data &&
+          {data ? (
             data.projects.map((project) => (
               <li key={project.id}>
                 <Link href={`/project/${project.id}`}>
@@ -73,7 +74,10 @@ const IndexPage: NextPage = () => {
                   </a>
                 </Link>
               </li>
-            ))}
+            ))
+          ) : (
+            <CardSkeletons />
+          )}
         </ul>
       </section>
     </main>
@@ -81,3 +85,13 @@ const IndexPage: NextPage = () => {
 }
 
 export default IndexPage
+
+function CardSkeletons() {
+  return (
+    <>
+      {Array.from({ length: 11 }).map((_, i) => (
+        <li key={i} aria-hidden sx={{ height: '222px', border: '1px solid', borderColor: 'neutral.16' }} />
+      ))}
+    </>
+  )
+}

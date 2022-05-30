@@ -1,9 +1,11 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+import { ThemeUICSSObject } from 'theme-ui'
+import { useWaitForTransaction } from 'wagmi'
 
-import { Button } from '../../src/Button'
 import { Heading } from '../../src/Heading'
+import { ThumbIcon } from '../../src/ThumbIcon'
 import { DIDNT_VOTE, DOWNVOTE, UPVOTE, useCurrentUserVote } from '../../src/useCurrentUserVote'
 import { useVote } from '../../src/useVote'
 import { ProjectQuery, useProjectQuery } from './[project].queries.generated'
@@ -58,7 +60,29 @@ const ProjectPage: NextPage = () => {
           </div>
           <div>
             <dt sx={{ color: 'neutral.64' }}>Owner</dt>
-            <dt>{project?.owner?.id}</dt>
+            <dt>
+              {project?.owner?.id && (
+                <a
+                  href={`https://rinkeby.etherscan.io/address/${project?.owner?.id}`}
+                  target="__blank"
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    textDecorationColor: 'primary.64',
+                    borderRadius: '4px',
+                    p: '0.125rem 0.25rem',
+                    m: '-0.125rem -0.25rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    ':hover, :focus-visible': {
+                      backgroundColor: 'primary.08',
+                    },
+                  }}
+                >
+                  {project.owner.id}
+                </a>
+              )}
+            </dt>
           </div>
         </dl>
       </section>
@@ -71,9 +95,21 @@ export default ProjectPage
 
 type Project = Exclude<ProjectQuery['project'], undefined | null>
 
-function ProjectVotingSection({ project, projectId }: { project: Project; projectId: string }) {
-  // TODO: The user can't vote if they already voted, so we need to check this.
+const voteButtonStyle: ThemeUICSSObject = {
+  lineHeight: 1,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '0.5rem',
+  p: '0.5rem 1rem',
+  borderRadius: '8px',
+  '&:not(:disabled):hover, &:not(:disabled):focus-visible': {
+    backgroundColor: 'primary.08',
+  },
+}
+const voteCountStyle: ThemeUICSSObject = { fontWeight: 700, fontSize: 'lg', letterSpacing: '-0.4px' }
 
+function ProjectVotingSection({ project, projectId }: { project: Project; projectId: string }) {
   const userVoteOnChain = useCurrentUserVote(projectId)
 
   const vote = useVote(project.name || '')
@@ -81,30 +117,36 @@ function ProjectVotingSection({ project, projectId }: { project: Project; projec
   const handleUpvote = () => vote.write(projectId, 1)
   const handleDownvote = () => vote.write(projectId, 2)
 
-  const score = project.upvotes - project.downvotes
+  const didntVote = userVoteOnChain === DIDNT_VOTE
+  const upvoted = userVoteOnChain === UPVOTE
+  const downvoted = userVoteOnChain === DOWNVOTE
+
+  const buttonsDisabled = !didntVote || vote.isLoading
 
   return (
-    <section sx={{ display: 'flex', flexDirection: 'row', gap: '0.5rem', alignItems: 'center' }}>
-      {userVoteOnChain === DIDNT_VOTE && (
-        <>
-          <Button onClick={handleUpvote} icon={<ArrowUpIcon />} disabled={vote.isLoading}>
-            Upvote
-          </Button>
-          <Button onClick={handleDownvote} icon={<ArrowDownIcon />} disabled={vote.isLoading}>
-            Downvote
-          </Button>{' '}
-        </>
+    <section sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      <button
+        title="Upvote"
+        sx={{ ...voteButtonStyle, color: upvoted ? 'primary' : 'neutral.64' }}
+        disabled={buttonsDisabled}
+        onClick={handleUpvote}
+      >
+        <span sx={voteCountStyle}>{project.upvotes}</span>
+        <ThumbIcon direction="up" size="18" aria-label="Upvotes" />
+        {upvoted && <span>{}</span>}
+      </button>
+      <button
+        title="Downvote"
+        sx={{ ...voteButtonStyle, color: downvoted ? 'primary' : 'neutral.32' }}
+        disabled={buttonsDisabled}
+        onClick={handleDownvote}
+      >
+        <span sx={voteCountStyle}>{project.downvotes}</span>
+        <ThumbIcon direction="down" size="18" aria-label="Downvotes" />
+      </button>
+      {vote.isLoading && (
+        <p sx={{ fontSize: 'lg', color: 'neutral.88', ml: '0.5rem', fontStyle: 'italic' }}>Voting...</p>
       )}
-      <strong sx={{ fontSize: 'xl', color: 'neutral.88' }}>
-        Total:
-        <span sx={{ pl: '0.5rem', color: 'neutral' }}>
-          {score > 0 ? '+' : score < 0 ? '-' : ''}
-          {score}
-        </span>
-      </strong>
-      {userVoteOnChain === UPVOTE && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| You upvoted 👍</p>}
-      {userVoteOnChain === DOWNVOTE && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| You downvoted 👎</p>}
-      {vote.isLoading && <p sx={{ fontSize: 'xl', color: 'neutral.88' }}>| Transaction pending...</p>}
     </section>
   )
 }
@@ -123,35 +165,5 @@ function ProjectPageLayout({ heading, subheading, children }: ProjectPageLayoutP
       </header>
       {children}
     </main>
-  )
-}
-
-function ArrowUpIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-      sx={{ size: '1.5rem' }}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
-    </svg>
-  )
-}
-
-function ArrowDownIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-      sx={{ size: '1.5rem' }}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-    </svg>
   )
 }
