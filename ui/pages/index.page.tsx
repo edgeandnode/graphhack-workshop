@@ -56,7 +56,7 @@ const IndexPage: NextPage = () => {
                   },
                 }}
               >
-                Submit Project
+                Add Project
               </a>
             </Link>
           </li>

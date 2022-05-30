@@ -7,7 +7,7 @@ const SubmitProjectPage: NextPage = () => {
   return (
     <main sx={{ px: '1rem', maxWidth: '$container', mx: 'auto' }}>
       <header sx={{ pb: '3.5rem' }}>
-        <Heading>Submit a Project</Heading>
+        <Heading>Add a Project</Heading>
       </header>
       <SubmitProjectForm />
     </main>
