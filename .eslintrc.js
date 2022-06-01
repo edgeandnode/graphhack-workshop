@@ -25,6 +25,7 @@ module.exports = {
     'n/no-unsupported-features/es-syntax': 'off',
     'n/no-missing-import': 'off', // false positives, TS checks this
     'n/no-unpublished-import': 'off',
+    'n/no-unsupported-features/node-builtins': 'off',
 
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['warn'],

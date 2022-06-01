@@ -1,6 +1,6 @@
-import ReactImagesUploading from 'react-images-uploading'
-import type { ImageListType as ImageList } from 'react-images-uploading'
 import { SVGProps } from 'react'
+import type { ImageListType as ImageList } from 'react-images-uploading'
+import ReactImagesUploading from 'react-images-uploading'
 
 export type { ImageList }
 

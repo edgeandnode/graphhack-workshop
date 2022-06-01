@@ -1,11 +1,10 @@
-import { ProjectRegistry } from '@graphhack-workshop/contract'
 import { FormEventHandler, useState } from 'react'
 import { Input, Textarea, ThemeUICSSObject } from 'theme-ui'
 import { useAccount } from 'wagmi'
 
 import { Button } from './Button'
 import { Heading } from './Heading'
-import { ImageUploader, ImageList } from './ImageUploader'
+import { ImageList,ImageUploader } from './ImageUploader'
 import { uploadToIpfs } from './ipfs'
 import { ProjectCard } from './ProjectCard'
 import { useSubmitProject } from './useSubmitProject'

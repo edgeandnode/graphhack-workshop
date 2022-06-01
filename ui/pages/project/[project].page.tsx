@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { ThemeUICSSObject } from 'theme-ui'
-import { useWaitForTransaction } from 'wagmi'
 
 import { Heading } from '../../src/Heading'
 import { ThumbIcon } from '../../src/ThumbIcon'
