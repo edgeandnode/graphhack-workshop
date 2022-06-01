@@ -27,6 +27,8 @@ jobs:
         run: pnpm codegen
       - name: Build
         run: pnpm build
+        env:
+          NEXT_BASE_PATH: '/graphhack-workshop'
       - name: Test, Lint and Typecheck
         run: pnpm ci
         env:
