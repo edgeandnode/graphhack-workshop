@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
-import { Project_OrderBy } from '../src/graphql-types.generated'
 
+import { Project_OrderBy as OrderBy } from '../src/graphql-types.generated'
 import { Heading } from '../src/Heading'
 import { ProjectCard } from '../src/ProjectCard'
 import { useClickOutside } from '../src/useClickOutside'
@@ -116,7 +116,7 @@ function SortingSelect({ value: { orderBy, orderDirection }, onChange }: Sorting
   const containerRef = useRef<HTMLDivElement>(null)
   useClickOutside(containerRef, () => setIsOpen(false))
 
-  const options: [Project_OrderBy, string][] = [
+  const options: [OrderBy, string][] = [
     ['createdAt', 'Most recent'],
     ['upvotes', 'Upvotes'],
     ['name', 'Alphabetical'],
@@ -167,6 +167,7 @@ function SortingSelect({ value: { orderBy, orderDirection }, onChange }: Sorting
           >
             {options.map(([field, text]) => (
               <button
+                key={field}
                 sx={{
                   fontSize: 'sm',
                   fontWeight: 700,
