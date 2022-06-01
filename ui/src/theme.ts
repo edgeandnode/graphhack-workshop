@@ -7,6 +7,7 @@ const lightMode = {
     __default: '#fff',
     card: '#fff',
     secondary: '#E5E5E5',
+    tertiary: 'rgba(239, 239, 239, 0.35)',
   },
   primary: {
     '08': 'rgba(111, 76, 255, 0.08)',
@@ -15,12 +16,14 @@ const lightMode = {
     __default: '#6F4CFF',
   },
   neutral: {
+    '08': 'rgba(9, 6, 16, 0.08)',
     16: 'rgba(9, 6, 16, 0.16)',
     32: 'rgba(9, 6, 16, 0.32)',
     64: 'rgba(9, 6, 16, 0.64)',
     88: 'rgba(9, 6, 16, 0.88)',
     __default: 'rgb(9, 6, 16)',
   },
+  critical: 'orangered',
 }
 
 const darkMode: typeof lightMode = {
@@ -28,15 +31,18 @@ const darkMode: typeof lightMode = {
     __default: '#0f0f0f',
     card: '#000',
     secondary: '#0c0c0c',
+    tertiary: '#0e0e0e',
   },
   primary: lightMode.primary,
   neutral: {
+    '08': 'rgba(255, 240, 255, 0.08)',
     16: 'rgba(255, 240, 255, 0.16)',
     32: 'rgba(235, 240, 255, 0.32)',
     64: 'rgba(235, 240, 255, 0.64)',
     88: 'rgba(235, 240, 255, 0.88)',
     __default: 'rgb(235, 240, 255)',
   },
+  critical: 'orangered',
 }
 
 export type ColorModeName = 'light' | 'dark'

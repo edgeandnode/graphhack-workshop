@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { ThemeUICSSObject } from 'theme-ui'
-import { useWaitForTransaction } from 'wagmi'
 
 import { Heading } from '../../src/Heading'
 import { ThumbIcon } from '../../src/ThumbIcon'
@@ -24,7 +23,7 @@ const ProjectPage: NextPage = () => {
   if (error) {
     return (
       <ProjectPageLayout heading="Something went wrong">
-        <pre sx={{ color: 'orangered' }}>{(error as Error).toString()}</pre>
+        <pre sx={{ color: 'critical' }}>{(error as Error).toString()}</pre>
       </ProjectPageLayout>
     )
   }

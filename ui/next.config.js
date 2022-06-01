@@ -6,6 +6,7 @@ const nextConfig = {
   env: {
     SUBGRAPH_URL: process.env.SUBGRAPH_URL,
     INFURA_KEY: process.env.INFURA_KEY,
+    IPFS_URI: process.env.IPFS_URI,
   },
   eslint: {
     ignoreDuringBuilds: true, // we run ESLint from the root directory

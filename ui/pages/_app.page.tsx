@@ -21,7 +21,9 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
           <header
             sx={{
               display: 'flex',
-              p: '1rem 1rem 0 1rem',
+              pt: '1rem',
+              px: '1rem',
+              pb: ['1rem', '2rem', '4rem'],
               alignItems: 'center',
               justifyContent: 'space-between',
               maxWidth: '$container',
