@@ -24,7 +24,7 @@ const ProjectPage: NextPage = () => {
   if (error) {
     return (
       <ProjectPageLayout heading="Something went wrong">
-        <pre sx={{ color: 'orangered' }}>{(error as Error).toString()}</pre>
+        <pre sx={{ color: 'critical' }}>{(error as Error).toString()}</pre>
       </ProjectPageLayout>
     )
   }

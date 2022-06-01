@@ -5,14 +5,12 @@ import { useAccount } from 'wagmi'
 
 import { Button } from './Button'
 import { Heading } from './Heading'
+import { ImageUploader, ImageList } from './ImageUploader'
+import { uploadToIpfs } from './ipfs'
 import { ProjectCard } from './ProjectCard'
 import { useSubmitProject } from './useSubmitProject'
 
 const containerStyle: ThemeUICSSObject = {
-  maxWidth: '40rem',
-  backgroundColor: 'background.card',
-  boxShadow: '0px 4px 24px rgba(30, 37, 44, 0.16)',
-  p: '2rem',
   borderRadius: '8px',
   mx: 'auto',
   display: 'flex',
@@ -20,10 +18,11 @@ const containerStyle: ThemeUICSSObject = {
   gap: '1rem',
 }
 
-type SubmitProjectFormControls = {
-  [P in keyof ProjectRegistry.ProjectMetadataStruct]: HTMLInputElement
+interface SubmitProjectFormControlsCollection extends HTMLFormControlsCollection {
+  name: HTMLInputElement
+  subtitle: HTMLInputElement
+  description: HTMLTextAreaElement
 }
-interface SubmitProjectFormControlsCollection extends SubmitProjectFormControls, HTMLFormControlsCollection {}
 interface SubmitProjectFormElement extends HTMLFormElement {
   readonly elements: SubmitProjectFormControlsCollection
 }
@@ -31,24 +30,43 @@ interface SubmitProjectFormElement extends HTMLFormElement {
 export function SubmitProjectForm() {
   const submitProject = useSubmitProject()
   const account = useAccount()
+  const [images, setImages] = useState<ImageList>([])
+  const [imageError, setImageError] = useState<undefined | 'image-required' | 'ipfs-upload-failed'>()
 
-  const handleSubmit: FormEventHandler<SubmitProjectFormElement> = (event) => {
+  const handleSubmit: FormEventHandler<SubmitProjectFormElement> = async (event) => {
     event.preventDefault()
 
-    const { name, subtitle, imageUrl, description } = event.currentTarget.elements
+    const { name, subtitle, description } = event.currentTarget.elements
+    const file = images[0]?.file
+
+    if (!file) {
+      setImageError('image-required')
+      return
+    }
+
+    let ipfsImageUrl: string
+    try {
+      ipfsImageUrl = await uploadToIpfs(file)
+      console.log('Image uploaded to', ipfsImageUrl)
+    } catch (err) {
+      console.error(err)
+      setImageError('ipfs-upload-failed')
+      return
+    }
 
     submitProject.write({
       name: name.value,
       subtitle: subtitle.value,
-      imageUrl: imageUrl.value,
       description: description.value,
+
+      imageUrl: ipfsImageUrl,
     })
   }
 
   if (submitProject.error) console.error(submitProject.error)
 
   if (submitProject.response && submitProject.lastArgs) {
-    console.log(submitProject.response)
+    console.log('Project submitted ', submitProject.response)
     const project = submitProject.lastArgs[0]
     const ownerAddress = account.data?.address
 
@@ -108,12 +126,27 @@ export function SubmitProjectForm() {
       onSubmit={handleSubmit}
       sx={{
         ...containerStyle,
+        gap: ['1rem', '2rem'],
         '> label': {
-          '> div': { pb: '0.5rem', color: 'neutral.64', fontWeight: 500 },
-          'input, textarea': {
+          display: 'flex',
+          gap: [0, '2rem', '3rem'],
+          flexDirection: ['column', 'row'],
+          '> div': {
+            pb: '0.5rem',
+            color: 'neutral.64',
+            fontWeight: 500,
+            width: ['auto', '6rem'],
+            textAlign: ['left', 'right'],
+          },
+          input: {
             textIndent: '1rem',
             py: '1rem',
-            borderColor: 'neutral.32',
+          },
+          textarea: {
+            p: '1rem',
+          },
+          'input, textarea': {
+            borderColor: 'neutral.16',
             borderWidth: '2px',
           },
         },
@@ -124,13 +157,17 @@ export function SubmitProjectForm() {
           <pre>{submitProject.error.message}</pre>
         </section>
       )}
+      <ImageUploader
+        value={images}
+        onChange={setImages}
+        labelId="submit-project-image-upload"
+        sx={{ height: '400px' }}
+      />
+      {imageError === 'image-required' && <p sx={{ color: 'critical' }}>The image is required.</p>}
+      {imageError === 'ipfs-upload-failed' && <p sx={{ color: 'critical' }}>IPFS upload failed.</p>}
       <label>
         <div>Name</div>
         <Input name="name" type="text" required autoComplete="off" />
-      </label>
-      <label>
-        <div>Image URL</div>
-        <ImageUrlInput />
       </label>
       <label>
         <div>
@@ -144,30 +181,13 @@ export function SubmitProjectForm() {
         </div>
         <Textarea name="description" rows={5} />
       </label>
-      <Button type="submit" sx={{ mt: '1rem' }} disabled={submitProject.isLoading}>
+      <Button
+        type="submit"
+        sx={{ width: ['auto', 'min-content'], whiteSpace: 'pre', ml: 'auto' }}
+        disabled={submitProject.isLoading}
+      >
         {submitProject.isLoading ? 'Submitting' : 'Submit'} Project
       </Button>
     </form>
-  )
-}
-
-function ImageUrlInput() {
-  const [imageUrl, setImageUrl] = useState('')
-
-  return (
-    <>
-      <div
-        sx={{
-          height: '8rem',
-          backgroundColor: 'background.secondary',
-          backgroundImage: `url(${imageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          borderRadius: '4px',
-          mb: '0.5rem',
-        }}
-      />
-      <Input name="imageUrl" type="text" required onChange={(event) => setImageUrl(event.target.value)} />
-    </>
   )
 }

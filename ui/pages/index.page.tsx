@@ -35,7 +35,7 @@ const IndexPage: NextPage = () => {
               height: '222px',
             }}
           >
-            <Link href="/project/submit">
+            <Link href="/project/add">
               <a
                 sx={{
                   flex: 1,
