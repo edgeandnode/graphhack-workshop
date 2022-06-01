@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: 
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - uses: pnpm/action-setup@v2
@@ -30,3 +32,11 @@ jobs:
         env:
           CI: true
           INFURA_KEY: 'empty'
+      - name: Export Next.js build
+        run: cd ui && pnpm next export
+      - name: Deploy to GitHub Actions
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ui/out
