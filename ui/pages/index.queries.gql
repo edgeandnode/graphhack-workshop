@@ -1,12 +1,10 @@
-query Projects {
-  projects {
+query Projects($orderBy: Project_orderBy, $orderDirection: OrderDirection) {
+  projects(orderBy: $orderBy, orderDirection: $orderDirection) {
     id
     name
     imageUrl
     description
     createdAt
-    upvotes
-    downvotes
     owner {
       id
     }
