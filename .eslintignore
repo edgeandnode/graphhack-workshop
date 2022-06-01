@@ -2,6 +2,7 @@ node_modules
 **/node_modules
 
 **/dist
+ui/out
 
 contract/artifacts
 contract/cache
