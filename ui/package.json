@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc",
     "codegen": "graphql-codegen -c graphql-codegen.yml && pnpm postcodegen",
-    "postcodegen": "pnpm prettier --write {src,pages}/**/*.generated.{ts,tsx}",
+    "postcodegen": "pnpm prettier --write {src,pages}/**/*.generated.ts",
     "postinstall": "pnpm codegen || echo 'postinstall failed'"
   },
   "dependencies": {
