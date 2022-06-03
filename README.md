@@ -2,7 +2,13 @@
 
 ## Requirements
 
-- **[PNPM] [7](https://pnpm.io/installation)**
+- **[PNPM] [7](https://pnpm.io/installation)**,
+  Install using:
+
+```
+npm install -g pnpm
+```
+
 - **Node >=14**
 
 [pnpm]: https://pnpm.io/
